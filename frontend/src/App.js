@@ -1,12 +1,14 @@
 import React from 'react';
-import UserList from './components/UserList';
+import UserList from './ListaUsuarios';
+import LoginRegistro from './LoginRegistro';
+import './App.css';
+
 
 function App() {
 return (
-<div>
-<h1>React + MySQL Example</h1>
+<div className='divPadre'>
+<LoginRegistro/>
 
-<UserList />
 </div>
 );
 }
