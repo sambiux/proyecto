@@ -134,7 +134,68 @@ form .confirmarDts button{
 form .confirmarDts button:hover{
   box-shadow: 2px 2px 2px black;
 }
+/* Contenedor general del CRUD */
+.contenedor-crud {
+  padding: 25px;
+  max-width: 600px;
+  margin: auto;
+}
 
+/* Título */
+.contenedor-crud h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Formulario de agregar usuario */
+.form-crud {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.form-crud input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+/* Botón agregar */
+.btn-agregar {
+  padding: 8px 12px;
+  background: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+  padding: 6px 10px;
+  background: #e84141;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-eliminar:hover {
+  background: #c0392b;
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+table th, table td {
+  padding: 10px;
+}
 
 
 

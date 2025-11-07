@@ -1,16 +1,11 @@
-import React from 'react';
-import UserList from './ListaUsuarios';
-import LoginRegistro from './LoginRegistro';
-import './App.css';
-
+import Usuarios from "./components/usuarios";
 
 function App() {
-return (
-<div className='divPadre'>
-<LoginRegistro/>
-
-</div>
-);
+  return (
+    <div>
+      <Usuarios />
+    </div>
+  );
 }
 
 export default App;
