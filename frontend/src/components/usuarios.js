@@ -1,78 +1,134 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../supabase";
 
-export default function Usuarios() {
+function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
-  const [form, setForm] = useState({ nombre: "", email: "", telefono: "" });
-
-  // READ
-  const getUsuarios = async () => {
-    const { data, error } = await supabase
-      .from("usuarios")
-      .select("*")
-      .order("fecha_registro", { ascending: false });
-
-    if (!error) setUsuarios(data);
-  };
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [idEditar, setIdEditar] = useState(null);
 
   useEffect(() => {
-    getUsuarios();
+    obtenerUsuarios();
   }, []);
 
-  // CREATE
-  const addUsuario = async () => {
-    if (!form.nombre || !form.email) return alert("Faltan datos");
-    await supabase.from("usuarios").insert([form]);
-    setForm({ nombre: "", email: "", telefono: "" });
-    getUsuarios();
-  };
+  async function obtenerUsuarios() {
+    const respuesta = await supabase.from("usuarios").select("*");
+    if (respuesta.data) {
+      setUsuarios(respuesta.data);
+    } else {
+      alert("Error al cargar usuarios");
+    }
+  }
 
-  // DELETE
-  const deleteUsuario = async (id) => {
-    await supabase.from("usuarios").delete().eq("id", id);
-    getUsuarios();
-  };
+  async function guardarUsuario() {
+    if (nombre === "" || email === "") {
+      alert("Faltan datos");
+      return;
+    }
+
+    if (idEditar === null) {
+      const insertar = await supabase.from("usuarios").insert([
+        { nombre: nombre, email: email, telefono: telefono }
+      ]);
+      if (insertar.error) {
+        alert("Error al guardar");
+      } else {
+        alert("Usuario agregado");
+      }
+    } else {
+      const actualizar = await supabase
+        .from("usuarios")
+        .update({ nombre: nombre, email: email, telefono: telefono })
+        .eq("id", idEditar);
+      if (actualizar.error) {
+        alert("Error al actualizar");
+      } else {
+        alert("Usuario actualizado");
+      }
+      setIdEditar(null);
+    }
+
+    setNombre("");
+    setEmail("");
+    setTelefono("");
+    obtenerUsuarios();
+  }
+
+  async function borrarUsuario(id) {
+    const borrar = await supabase.from("usuarios").delete().eq("id", id);
+    if (borrar.error) {
+      alert("Error al eliminar");
+    } else {
+      alert("Usuario eliminado");
+    }
+    obtenerUsuarios();
+  }
+
+  function editarUsuario(usuario) {
+    setIdEditar(usuario.id);
+    setNombre(usuario.nombre);
+    setEmail(usuario.email);
+    setTelefono(usuario.telefono);
+  }
 
   return (
-    <div style={{ padding: "25px" }}>
-      <h2>CRUD Usuarios (Supabase)</h2>
+    <div style={{ padding: "20px" }}>
+      <h2>CRUD usuarios (versión principiante)</h2>
 
       <div>
         <input
           placeholder="Nombre"
-          value={form.nombre}
-          onChange={e => setForm({ ...form, nombre: e.target.value })}
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
         />
         <input
           placeholder="Email"
-          value={form.email}
-          onChange={e => setForm({ ...form, email: e.target.value })}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           placeholder="Teléfono"
-          value={form.telefono}
-          onChange={e => setForm({ ...form, telefono: e.target.value })}
+          value={telefono}
+          onChange={(e) => setTelefono(e.target.value)}
         />
-        <button onClick={addUsuario}>Agregar</button>
+        <button onClick={guardarUsuario}>
+          {idEditar === null ? "Agregar" : "Actualizar"}
+        </button>
       </div>
 
-      <table border="1" cellPadding="10" style={{ marginTop: "20px" }}>
+      <br />
+      <table border="1" cellPadding="10">
         <thead>
           <tr>
-            <th>Nombre</th><th>Email</th><th>Teléfono</th><th>Eliminar</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {usuarios.map(u => (
-            <tr key={u.id}>
-              <td>{u.nombre}</td>
-              <td>{u.email}</td>
-              <td>{u.telefono}</td>
-              <td><button onClick={() => deleteUsuario(u.id)}>elimiar</button></td>
+          {usuarios.length > 0 ? (
+            usuarios.map((u) => (
+              <tr key={u.id}>
+                <td>{u.nombre}</td>
+                <td>{u.email}</td>
+                <td>{u.telefono}</td>
+                <td>
+                  <button onClick={() => editarUsuario(u)}>Editar</button>
+                  <button onClick={() => borrarUsuario(u.id)}>Borrar</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4">No hay usuarios</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>
   );
 }
+
+export default Usuarios;
