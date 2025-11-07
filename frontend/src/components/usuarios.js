@@ -122,7 +122,7 @@ function Usuarios() {
             ))
           ) : (
             <tr>
-              <td colSpan="4">No hay usuarios</td>
+              <td colSpan="4">No hay usuarios disponibles</td>
             </tr>
           )}
         </tbody>
