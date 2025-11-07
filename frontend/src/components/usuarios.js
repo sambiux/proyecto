@@ -74,7 +74,7 @@ function Usuarios() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>CRUD usuarios (versión principiante)</h2>
+      <h2>CRUD usuarios </h2>
 
       <div>
         <input
