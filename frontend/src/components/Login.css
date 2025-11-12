@@ -1,0 +1,91 @@
+/* ==== Login.css ==== */
+
+/* Fondo general */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #1abc9c; /* Verde menta */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor del formulario */
+.login-box {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  padding: 30px;
+  text-align: center;
+}
+
+/* Encabezado */
+.login-box h2 {
+  background-color: #16a085;
+  color: #fff;
+  padding: 10px;
+  margin: -30px -30px 30px -30px;
+  border-radius: 10px 10px 0 0;
+  font-weight: 600;
+}
+
+/* Inputs */
+.login-box input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.login-box input:focus {
+  border-color: #16a085;
+  box-shadow: 0 0 5px rgba(22, 160, 133, 0.5);
+}
+
+/* Botón */
+.login-box button {
+  width: 100%;
+  background-color: #16a085;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-box button:hover {
+  background-color: #138d75;
+}
+
+/* Texto secundario */
+.login-box p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+.login-box a {
+  color: #16a085;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-box a:hover {
+  text-decoration: underline;
+}
+
+/* Mensaje de error */
+.error-message {
+  color: red;
+  font-size: 13px;
+  margin-top: 8px;
+}
